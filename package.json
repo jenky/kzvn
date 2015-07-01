@@ -1,0 +1,36 @@
+{
+  "private": true,
+  "dependencies": {
+	"backbone": "*",
+	"backbone-deep-model": "*",
+	"jquery": "*",
+	"underscore": "*",
+	"lodash": "*",
+	"react": "^0.13.3",
+	"backbone-react-component": "*",
+	"formsy-react": "*",
+	"formsy-react-components": "*",
+	"node-waves": "*",
+	"react-waypoint": "*"
+  },
+  "devDependencies": {
+	"del": "*",
+	"gulp": "*",
+	"gulp-autoprefixer": "*",
+	"gulp-concat": "*",
+	"gulp-jshint": "*",
+	"gulp-less": "*",
+	"gulp-minify-css": "*",
+	"gulp-plumber": "*",
+	"gulp-rename": "*",
+	"gulp-rev": "~4",
+	"gulp-sass": "*",
+	"gulp-uglify": "*",
+	"webpack": "*",
+	"jsx-loader": "*",
+	"jstransform-loader": "*",
+	"jsx-control-statements": "*",
+	"chunk-manifest-webpack-plugin": "*",
+	"split-by-name-webpack-plugin": "*"
+  }
+}

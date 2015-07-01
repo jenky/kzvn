@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Exception;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -13,7 +15,7 @@ class Handler extends ExceptionHandler
      * @var array
      */
     protected $dontReport = [
-        'Symfony\Component\HttpKernel\Exception\HttpException'
+        // 'Symfony\Component\HttpKernel\Exception\HttpException'
     ];
 
     /**
@@ -38,6 +40,23 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        $helper = get_helper('Api');
+
+        if ($e instanceof ModelNotFoundException)
+        {
+            $model = $e->getModel();
+            $name = str_replace('\\', '', ucfirst(str_singular(class_basename($model))));
+            return $helper->responseError(404, $name . ' Not Found', 404);
+            // abort(404);
+        }
+
+        if ($e instanceof HttpException)
+        {
+            $status = $e->getStatusCode();
+            
+            return $helper->responseError($status, '', $status);
+        }
+
         return parent::render($request, $e);
     }
 }

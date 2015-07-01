@@ -11,16 +11,32 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->welcome();
+// $app->get('/', function () use ($app) {
+//     return $app->welcome();
+// });
+
+$app->group(['prefix' => 'v1', 'namespace' => 'App\Http\Controllers'], function () use ($app) {
+	$app->get('records', [
+		'as' => 'records.index',
+		'uses' => 'RecordsController@latest'
+	]);
+
+	$app->get('records/stream', [
+		'as' => 'records.stream',
+		'uses' => 'RecordsController@stream'
+	]);
+
+	$app->get('records/{map}', [
+		'as' => 'records.show',
+		'uses' => 'RecordsController@allRecords'
+	]);
+
+	$app->get('records/{map}/{type:pro|noob}', [
+		'as' => 'records.show',
+		'uses' => 'RecordsController@records'
+	]);
 });
 
-$app->get('records', [
-	'as' => 'records.index',
-	'uses' => 'RecordsController@latest'
-]);
-
-$app->get('/records/{map}/{type}', [
-	'as' => 'records.show',
-	'uses' => 'RecordsController@records'
-]);
+$app->get('/', function () use ($app) {
+    return view('app');
+});

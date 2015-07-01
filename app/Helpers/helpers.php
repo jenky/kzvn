@@ -196,7 +196,7 @@ if ( ! function_exists('cache_buster'))
 
 		if (is_null($manifest))
 		{
-			$manifest = json_decode(file_get_contents(public_path($prefix).'/rev-manifest.json'), true);
+			$manifest = json_decode(file_get_contents(app()->basePath('public/' . $prefix).'/rev-manifest.json'), true);
 		}
 
 		if (isset($manifest[$file]))
@@ -277,5 +277,32 @@ if ( ! function_exists('root_domain'))
 		$domain = get_domain($url);
 		
 		return str_replace($host, $domain, $url);
+	}
+}
+
+if ( ! function_exists('kz_time'))
+{
+	function kz_time($time, $rich = false)
+	{
+		if (!$time)
+		{
+			return '--:--.--';
+		}
+		
+		if ($rich)
+		{
+			$min = floor(floor($time)/60);
+			$sec = floor($time - (60*$min));
+			$milisecond = round(($time - floor($time))*100);
+			$text = sprintf("<span class=\"kzTime\">%02d:%02s</span><span class=\"kzMs\">.%02s</span>", $min, $sec, $milisecond);
+		}
+		else
+		{
+			$min = floor(floor($time)/60);
+			$sec = $time - (60*$min);
+			$text = sprintf("%02d:%s%.2f", $min, $sec < 10 ? "0": "", $sec);
+		}
+
+		return $text;		
 	}
 }
